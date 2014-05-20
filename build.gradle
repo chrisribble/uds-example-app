@@ -15,6 +15,7 @@ configurations {
 repositories {
 	mavenCentral()
 }
+
 dependencies {
 	compile "org.apache.commons:commons-lang3:3.1"
 
@@ -29,7 +30,7 @@ dependencies {
 }
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '1.12'
+	gradleVersion = "1.12"
 }
 
 task xjc {
@@ -73,6 +74,7 @@ jar {
 	from files(sourceSets.generatedJaxb.output)
 	exclude "xsd"
 }
-	
+
+eclipseClasspath.dependsOn(xjc)
 
 clean.delete "src/generatedJaxb"
