@@ -79,20 +79,20 @@ public class ExampleApp {
 				LOG.warn("Unable to find user " + username);
 			}
 		} catch (ProcessingException e) {
-			LOG.error("HTTP request failed: " + e.getMessage());
+			LOG.error("HTTP request failed: " + e.getMessage(), e);
 		}
 	}
 
 	private static Client getClient() {
 		// Create a client instance with SSL certificate validation disabled
 		Client client = ClientBuilder.newBuilder()
-				.sslContext(getSSLContext())
-				.hostnameVerifier(getHostnameVerifier())
-				.build();
+			.sslContext(getSSLContext())
+			.hostnameVerifier(getHostnameVerifier())
+			.build();
 
 		// Adjust connection and read timeout
 		client.property(ClientProperties.CONNECT_TIMEOUT, CONNECT_TIMEOUT_MS);
-		client.property(ClientProperties.READ_TIMEOUT,    READ_TIMEOUT_MS);
+		client.property(ClientProperties.READ_TIMEOUT, READ_TIMEOUT_MS);
 
 		return client;
 	}
@@ -123,7 +123,7 @@ public class ExampleApp {
 			ctx = SSLContext.getInstance("TLS");
 			ctx.init(null, certs, new SecureRandom());
 		} catch (GeneralSecurityException ex) {
-			LOG.error("Security Exception - Proceding ahead anyways", ex);
+			LOG.error("Security Exception: " + ex.getMessage() + " - Proceeding anyway.", ex);
 		}
 
 		return ctx;
